@@ -5,6 +5,7 @@ import {authService} from "fbase"
 function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userObj, setUserObj] = useState(null);
   
   // component가 mount 될 때 실행
   // firebase loading 시간이 모자라서 로그인 처리가 안되는 것 방지.
@@ -15,12 +16,13 @@ function App() {
       } else {
         setIsLoggedIn(false);
       }
-      setInit(true)
+      setInit(true);
+      setUserObj(user);
     })
   }, [])
   return (
   <>
-    {init ? <AppRouter isLoggedIn={isLoggedIn}/> : "Initalizing..."}
+    {init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} /> : "Initalizing..."}
     <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
   </>
   );
