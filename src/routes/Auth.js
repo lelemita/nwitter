@@ -1,8 +1,13 @@
 import React, { useState } from "react";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth'
+import { authService } from "fbase";
+import App from "components/App";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
+  const [newAccount, setNewAccount] = useState(true);
+  const [error, setError] = useState("");
   const onChange = (event) => {
       const {target: {name, value}} = event;
       if(name === "email") {
@@ -11,15 +16,38 @@ const Auth = () => {
         setPw(value);
       }
   }
-  const onSubmit = (event) => {
+  const onSubmit = async(event) => {
       event.preventDefault();
+      try {
+        let data;
+        if(newAccount) {
+          data = await createUserWithEmailAndPassword(authService, email, pw);
+        } else {
+          data = await signInWithEmailAndPassword(authService, email, pw);
+        }
+        console.log(data);
+     } catch(err) {
+         setError(err.message);
+     }
+  };
+  const onClick = async(event) => {
+    const {target: {name}, } = event;
+    let provider;
+    if(name === "github") {
+      provider = new GithubAuthProvider();
+    } else if(name === "google") {
+      provider = new GoogleAuthProvider();
+    }
+   await signInWithPopup(authService, provider);
   }
+  const toggleAccount = () => setNewAccount((prev) => !prev);
   return (
     <div>
-      <form onSubmit={onSubmit}>
+      <span onClick={toggleAccount}>{newAccount? "Sign in" : "Create Account"}</span>
+      <form onSubmit={onSubmit}> 
         <input
           name="email"
-          type="text"
+          type="email"
           placeholder="Email"
           required
           value={email}
@@ -33,11 +61,12 @@ const Auth = () => {
           value={pw}
           onChange={onChange}
         />
-        <input type="submit" value="Log In" />
+        <input type="submit" value={newAccount ? "Create Account" : "Log In"} />
+        {error}
       </form>
       <div>
-        <button>Continue with Google</button>
-        <button>Continue with Github</button>
+        <button onClick={onClick} name="github">Continue with Github</button>
+        <button onClick={onClick} name="google">Continue with Google</button>
       </div>
     </div>
   );
