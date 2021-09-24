@@ -5,11 +5,11 @@ import Auth from "routes/Auth";
 import Home from "routes/Home";
 import Navigation from "./Navigation";
 
-const AppRouter = ({isLoggedIn, userObj}) => {
+const AppRouter = ({isLoggedIn, userObj, refreshUser}) => {
     return (
         <Router>
             {/* 로그인 되었을 때 Nav표시 */}
-            {isLoggedIn && <Navigation/>}
+            {isLoggedIn && <Navigation userObj={userObj}/>}
             <Switch>
                 {isLoggedIn ? ( 
                 <>
@@ -17,7 +17,7 @@ const AppRouter = ({isLoggedIn, userObj}) => {
                         <Home userObj={userObj}/>
                     </Route>
                     <Route exact path="/profile">
-                        <Profile />
+                        <Profile userObj={userObj} refreshUser={refreshUser} />
                     </Route>
                 </> 
                 ) : (

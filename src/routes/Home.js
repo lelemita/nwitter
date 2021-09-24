@@ -1,7 +1,7 @@
 import { dbService, storageService } from "fbase";
 import React, {useState, useEffect} from "react";
-import { collection, addDoc, getDocs, doc, onSnapshot } from "firebase/firestore";
-import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
+import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import Nweet from "components/Nweet";
 
