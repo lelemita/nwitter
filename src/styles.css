@@ -186,8 +186,8 @@ form {
 }
 
 .nweet img {
-  right: -10px;
-  top: 20px;
+  right: -20px;
+  top: 3px;
   position: absolute;
   border-radius: 50%;
   width: 50px;
