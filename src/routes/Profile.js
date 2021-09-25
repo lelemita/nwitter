@@ -1,14 +1,14 @@
-import { authService, dbService } from "fbase";
-import React, {useState, useEffect} from "react";
+import { authService} from "fbase";
+import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
-import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 
 const Profile = ({ userObj, refreshUser }) => {
-    const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+    const [newDisplayName, setNewDisplayName] = useState(userObj.displayName? userObj.displayName : "");
     const history = useHistory();
     const onLogOutClick = (event) => {
         authService.signOut();
+        refreshUser(true);
         history.push("/");
     };
     const onChange = (event) => {
@@ -24,19 +24,6 @@ const Profile = ({ userObj, refreshUser }) => {
             refreshUser();
         }
     };
-    
-    const getMyNweets = async () => {
-        const qry = query(
-            collection(dbService, "nweets"), 
-            where("creatorId", "==", userObj.uid), 
-            orderBy("createdAt", "desc")
-        );
-        const snaps = await getDocs(qry);
-        console.log(snaps.docs.map(doc => doc.data()));
-    };
-    useEffect(() => {
-        getMyNweets();
-    }, []);
 
     return (<>
         <form onSubmit={onSubmit}>
