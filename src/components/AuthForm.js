@@ -1,59 +1,72 @@
 import React, { useState } from "react";
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { authService } from "fbase";
 
 const AuthForm = () => {
-    const [email, setEmail] = useState("");
-    const [pw, setPw] = useState("");
-    const [error, setError] = useState("");
-    const [newAccount, setNewAccount] = useState(true);
-    const toggleAccount = () => setNewAccount((prev) => !prev);
+  const [email, setEmail] = useState("");
+  const [pw, setPw] = useState("");
+  const [error, setError] = useState("");
+  const [newAccount, setNewAccount] = useState(true);
+  const toggleAccount = () => setNewAccount((prev) => !prev);
 
-    const onChange = (event) => {
-        const {target: {name, value}} = event;
-        if(name === "email") {
-          setEmail(value);
-        }else if(name === "pw"){
-          setPw(value);
-        }
+  const onChange = (event) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name === "email") {
+      setEmail(value);
+    } else if (name === "pw") {
+      setPw(value);
     }
-    const onSubmit = async(event) => {
-        event.preventDefault();
-        try {
-          if(newAccount) {
-            await createUserWithEmailAndPassword(authService, email, pw);
-          } else {
-            await signInWithEmailAndPassword(authService, email, pw);
-          }
-       } catch(err) {
-           setError(err.message);
-       }
-    };
-    return (
-        <>
-            <span onClick={toggleAccount}>{newAccount? "Sign in" : "Create Account"}</span>
-            <form onSubmit={onSubmit}> 
-                <input
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    required
-                    value={email}
-                    onChange={onChange}
-                />
-                <input
-                    name="pw"
-                    type="password"
-                    placeholder="Password"
-                    required
-                    value={pw}
-                    onChange={onChange}
-                />
-                <input type="submit" value={newAccount ? "Create Account" : "Log In"} />
-                {error}
-            </form>
-        </>
-    );
+  };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      if (newAccount) {
+        await createUserWithEmailAndPassword(authService, email, pw);
+      } else {
+        await signInWithEmailAndPassword(authService, email, pw);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+  return (
+    <>
+      <form onSubmit={onSubmit} className="container">
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          required
+          value={email}
+          onChange={onChange}
+          className="authInput"
+        />
+        <input
+          name="pw"
+          type="password"
+          placeholder="Password"
+          required
+          value={pw}
+          onChange={onChange}
+          className="authInput"
+        />
+        <input
+          type="submit"
+          value={newAccount ? "Create Account" : "Log In"}
+          className="authInput authSubmit"
+        />
+        {error && <span className="authError">{error}</span>}
+      </form>
+      <span onClick={toggleAccount} className="authSwitch">
+        {newAccount ? "Sign in" : "Create Account"}
+      </span>
+    </>
+  );
 };
 
 export default AuthForm;

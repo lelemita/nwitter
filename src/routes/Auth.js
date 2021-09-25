@@ -1,28 +1,41 @@
 import React from "react";
-import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGoogle,
+  faGithub,
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+} from "firebase/auth";
 import { authService } from "fbase";
 import AuthForm from "components/AuthForm";
 
 const Auth = () => {
-
-
-  const onClick = async(event) => {
-    const {target: {name}, } = event;
+  const onClick = async (event) => {
+    const {
+      target: { name },
+    } = event;
     let provider;
-    if(name === "github") {
+    if (name === "github") {
       provider = new GithubAuthProvider();
-    } else if(name === "google") {
+    } else if (name === "google") {
       provider = new GoogleAuthProvider();
     }
-   await signInWithPopup(authService, provider);
-  }
+    await signInWithPopup(authService, provider);
+  };
 
   return (
-    <div>
+    <div className="authContainer">
       <AuthForm />
-      <div>
-        <button onClick={onClick} name="github">Continue with Github</button>
-        <button onClick={onClick} name="google">Continue with Google</button>
+      <div className="authBtns">
+        <button onClick={onClick} name="github" className="authBtn">
+        Continue with <FontAwesomeIcon icon={faGithub} />
+        </button>
+        <button onClick={onClick} name="google" className="authBtn">
+          Continue with <FontAwesomeIcon icon={faGoogle} />
+        </button>
       </div>
     </div>
   );
