@@ -58,6 +58,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
       ) : (
         <div>
           <h4>{nweetObj.text}</h4>
+          <h4 align="right">{new Date(nweetObj.createdAt).toLocaleDateString()}</h4>
           {nweetObj.attachmentUrl && (
             <img src={nweetObj.attachmentUrl} alt="attachment" />
           )}
