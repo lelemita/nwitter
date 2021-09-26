@@ -57,12 +57,13 @@ const Nweet = ({ nweetObj, isOwner }) => {
         </>
       ) : (
         <div>
-          <h3 style={{fontWeight:"bold"}}>{nweetObj.text}</h3>
-          <br/>
+          <h3>{nweetObj.text}</h3>
+          <div className="nweetImg">
+            {nweetObj.attachmentUrl && (
+              <img src={nweetObj.attachmentUrl} alt="attachment" />
+            )}
+          </div>
           <h4 align="right"><sub>{nweetObj.displayName} ({new Date(nweetObj.createdAt).toLocaleDateString()})</sub></h4>
-          {nweetObj.attachmentUrl && (
-            <img src={nweetObj.attachmentUrl} alt="attachment" />
-          )}
           {isOwner && (
             <div className="nweet__actions">
               <span onClick={onDeleteClick}>

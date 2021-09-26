@@ -47,6 +47,12 @@ const NweetFactory = ({ userObj }) => {
       target: { files },
     } = event;
     const theFile = files[0];
+    if(theFile.size > 1024 * 1024) {
+      alert("Attach file size maximumm is 1MB.");
+      document.querySelector("#attach-file").value = "";
+      return;
+    }
+
     const reader = new FileReader();
     reader.onloadend = (finishedEvent) => {
       const {
@@ -87,7 +93,7 @@ const NweetFactory = ({ userObj }) => {
         <input type="submit" value="&rarr;" className="factoryInput__arrow" />
       </div>
 
-      <label htmlFor="attach-file" className="factoryInput__label" hidden>
+      <label htmlFor="attach-file" className="factoryInput__label">
         <span>Add photos</span>
         <FontAwesomeIcon icon={faPlus} />
       </label>
@@ -99,7 +105,6 @@ const NweetFactory = ({ userObj }) => {
         style={{
           opacity: 0,
         }}
-        hidden
       />
       {attachment && (
         <div className="factoryForm__attachment">

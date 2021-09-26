@@ -169,11 +169,11 @@ form {
 }
 
 .nweet {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   background-color: white;
   width: 100%;
   max-width: 320px;
-  padding: 20px;
+  padding: 15px 20px;
   border-radius: 10px;
   position: relative;
   display: flex;
@@ -181,18 +181,25 @@ form {
   color: rgba(0, 0, 0, 0.8);
 }
 
-.nweet h4 {
+.nweet h3 {
   font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.nweet h4 {
+  font-size: 12px;
+  margin-top: 10px;
 }
 
 .nweet img {
-  right: -20px;
-  top: 3px;
-  position: absolute;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  max-width: 200px;
+  max-height: 200px;
   margin-top: 10px;
+}
+
+.nweetImg {
+  text-align: center;
 }
 
 .nweet__actions {
