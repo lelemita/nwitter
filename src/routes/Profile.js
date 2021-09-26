@@ -31,25 +31,29 @@ const Profile = ({ userObj, refreshUser }) => {
 
   return (
     <div className="container">
-      <form onSubmit={onSubmit} className="profileForm">
-        <input
-          type="text"
-          value={newDisplayName}
-          onChange={onChange}
-          placeholder="Display Name"
-          autoFocus
-          className="formInput"
-        />
-        <input
-          type="submit"
-          value="Update Profile"
-          className="formBtn"
-          style={{
-            marginTop: 10,
-          }}
-        />
-      </form>
-      <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>Sign Out</span>
+      {!userObj.fakeLogIn && (
+        <form onSubmit={onSubmit} className="profileForm">
+          <input
+            type="text"
+            value={newDisplayName}
+            onChange={onChange}
+            placeholder="Display Name"
+            autoFocus
+            className="formInput"
+          />
+          <input
+            type="submit"
+            value="Update Profile"
+            className="formBtn"
+            style={{
+              marginTop: 10,
+            }}
+          />
+        </form>
+      )}
+      <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
+        Sign Out
+      </span>
     </div>
   );
 };

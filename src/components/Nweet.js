@@ -32,7 +32,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
     }
   };
   return (
-    <div className="nweet">
+    <div className="nweet" style={{backgroundColor: nweetObj.background}}>
       {editing ? (
         <>
           {isOwner && (
@@ -57,8 +57,9 @@ const Nweet = ({ nweetObj, isOwner }) => {
         </>
       ) : (
         <div>
-          <h4>{nweetObj.text}</h4>
-          <h4 align="right">{new Date(nweetObj.createdAt).toLocaleDateString()}</h4>
+          <h3 style={{fontWeight:"bold"}}>{nweetObj.text}</h3>
+          <br/>
+          <h4 align="right"><sub>{nweetObj.displayName} ({new Date(nweetObj.createdAt).toLocaleDateString()})</sub></h4>
           {nweetObj.attachmentUrl && (
             <img src={nweetObj.attachmentUrl} alt="attachment" />
           )}

@@ -17,7 +17,10 @@ const Home = ({ userObj }) => {
         setNweets(nweetArr);
       }
     );
-  }, []);
+    return () => {
+      setNweets([]);
+    };
+  }, [userObj]);
 
   return (
     <div className="container">

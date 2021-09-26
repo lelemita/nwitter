@@ -217,6 +217,26 @@ form {
   height: 100vh;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.authBackground {
+  /* position: relative; */
+  background: url(https://source.unsplash.com/random);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.authBackground::before {
+  content: "";
+  opacity: 0.6;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: #000;
 }
 
 .authBtns {
@@ -269,13 +289,14 @@ form {
 }
 
 .authSwitch {
-  color: #04aaff;
+  color: #3dbdfd;
   cursor: pointer;
   margin-top: 10px;
   margin-bottom: 50px;
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   text-decoration: underline;
+  font-weight: 600;
 }
 
 .RouterDiv {

@@ -5,7 +5,7 @@ import {
 } from "firebase/auth";
 import { authService } from "fbase";
 
-const AuthForm = () => {
+const AuthForm = ({ withOutLogIn }) => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [error, setError] = useState("");
@@ -34,8 +34,15 @@ const AuthForm = () => {
       setError(err.message);
     }
   };
+  const onWithOutLogIn = (event) => {
+    withOutLogIn(true);
+  }
+
   return (
     <>
+      <span onClick={onWithOutLogIn} className="authSwitch">
+        로그인 없이 사용하기
+      </span>
       <form onSubmit={onSubmit} className="container">
         <input
           name="email"

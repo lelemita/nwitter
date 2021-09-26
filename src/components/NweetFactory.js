@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { dbService, storageService } from "fbase";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const NweetFactory = ({ userObj }) => {
+  const [hsl, setHSL] = useState("");
   const [nweet, setNweet] = useState("");
   const [attachment, setAttachment] = useState("");
   const onSubmit = async (event) => {
@@ -25,6 +27,8 @@ const NweetFactory = ({ userObj }) => {
       text: nweet,
       createdAt: Date.now(),
       creatorId: userObj.uid,
+      background: hsl,
+      displayName: userObj.displayName
     };
     await addDoc(collection(dbService, "nweets"), nweetObj);
     setNweet("");
@@ -56,6 +60,18 @@ const NweetFactory = ({ userObj }) => {
     setAttachment("");
     document.querySelector("#attach-file").value = "";
   };
+  const getHSLfromIP = async () => {
+    const res = await axios.get('https://geolocation-db.com/json/')
+    const num = Number(res.data.IPv4.split(".").join(""));
+    setHSL(`hsl(${num % 361}, ${num % 81 + 20}%, ${num % 21 + 70}%)`);
+  }
+
+  useEffect(() => {
+    getHSLfromIP();
+    return () => {
+      setHSL("");
+    };
+  }, []);
 
   return (
     <form onSubmit={onSubmit} className="factoryForm">
@@ -71,7 +87,7 @@ const NweetFactory = ({ userObj }) => {
         <input type="submit" value="&rarr;" className="factoryInput__arrow" />
       </div>
 
-      <label htmlFor="attach-file" className="factoryInput__label">
+      <label htmlFor="attach-file" className="factoryInput__label" hidden>
         <span>Add photos</span>
         <FontAwesomeIcon icon={faPlus} />
       </label>
@@ -83,6 +99,7 @@ const NweetFactory = ({ userObj }) => {
         style={{
           opacity: 0,
         }}
+        hidden
       />
       {attachment && (
         <div className="factoryForm__attachment">
