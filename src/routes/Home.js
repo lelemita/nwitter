@@ -1,6 +1,6 @@
 import { dbService } from "fbase";
 import React, { useState, useEffect } from "react";
-import { collection, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, orderBy, onSnapshot, query } from "firebase/firestore";
 import Nweet from "components/Nweet";
 import NweetFactory from "components/NweetFactory";
 
@@ -8,8 +8,7 @@ const Home = ({ userObj }) => {
   const [nweets, setNweets] = useState([]);
   useEffect(() => {
     onSnapshot(
-      collection(dbService, "nweets"),
-      orderBy("createdAt", "desc"),
+      query(collection(dbService, "nweets"), orderBy("createdAt", "desc")),
       (snap) => {
         const nweetArr = snap.docs.map((doc) => ({
           id: doc.id,
