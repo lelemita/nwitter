@@ -16,6 +16,10 @@ Nomadcoder의 트위터 클론 컨테스트 참가 프로젝트
     ![nwitter_capture](https://user-images.githubusercontent.com/26400902/134843037-1c1d2d42-db4f-4208-8acb-10fd6dc91445.png)
 
 
+## ToDo..
+* 로그인 없이 사용중에 새로고침을 하면, 로그인 화면으로 돌아가는 현상 해결하기
+* 홈화면에도 로그인화면처럼 배경이미지 넣기.
+
 
 ## Available Scripts
 In the project directory, you can run:
